@@ -1,0 +1,68 @@
+```
+import android.hardware.ConsumerIrManager;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ConsumerIrManager irManager;
+    private Button onButton;
+    private Button offButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        irManager = (ConsumerIrManager) getSystemService(CONSUMER_IR_SERVICE);
+
+        onButton = (Button) findViewById(R.id.on_button);
+        onButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irManager.transmit(38400, IR_CODE_ON);
+            }
+        });
+
+        offButton = (Button) findViewById(R.id.off_button);
+        offButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irManager.transmit(38400, IR_CODE_OFF);
+            }
+        });
+    }
+
+    private static final int IR_CODE_ON = 16754019;
+    private static final int IR_CODE_OFF = 16719651;
+}
+```
+
+To use this app, you will need to add the following permissions to your AndroidManifest.xml file:
+
+```
+<uses-permission android:name="android.permission.TRANSMIT_IR" />
+```
+
+You will also need to create an IR code file. This file should contain a list of IR codes, one per line. The format of each code is as follows:
+
+```
+frequency,code
+```
+
+For example, the following file contains the IR codes for the on and off buttons of a Samsung TV:
+
+```
+38400,16754019
+38400,16719651
+```
+
+Once you have created your IR code file, you can use the following command to install the app on your Android device:
+
+```
+adb install IRControl.apk
+```
+
+Once the app is installed, you can open it and use the on and off buttons to control your IR devices.
