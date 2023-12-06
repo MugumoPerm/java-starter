@@ -1,7 +1,7 @@
 public class CharacterCounter {
     public static void main(String[] args) {
 	String s = "Hello World";
-	int target = 9;
+	int target = l;
 
 	int count = count(s, target);
 	System.out.println(count);
